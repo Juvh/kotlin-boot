@@ -1,0 +1,64 @@
+= Spring Dependency management
+
+Maven 처럼 dependency 관리 및 제외 기능을 제공하는 Gradle plugin
+
+* https://docs.spring.io/dependency-management-plugin/docs/current/reference/html/
+
+== Introduction
+
+설정된 dependency management meta data에 기반하여,
+Dependency Management Plugin은 project의 직접적이고 전이적인(?) version을 관리하고,
+project dependency의 poms에 선언된 제외 사항을 준수할 것이다.
+
+== Requirements
+
+Plugin은 다음과 같은 요구사항을 가지고 있다.
+
+* Gradle 2.x(2.9 이상), 3.x, 4.x
+** Gradle 2.8 이하의 버전은 지원되지 않는다.
+* Java 6 이상
+
+== Getting Started
+
+plugin은 Gradle Plugin Portal에서 이용할 수 있고, 다음과 같이 적용할 수 있다.:
+
+.build.gradle.kts
+[source, kotlin]
+----
+plugins {
+    id("io.spring.dependency-management") version "1.0.6.RELEASE"
+}
+----
+
+원한다면 Maven Central과 JCenter에서도 plugin을 이용할 수 있다.
+
+.build.gradle.kts
+[source, kotlin]
+----
+buildscript {
+  repositories {
+    maven {
+      url = uri("https://repo.spring.io/plugins-snapshot")
+    }
+  }
+  dependencies {
+    classpath("io.spring.gradle:dependency-management-plugin:1.0.7.BUILD-SNAPSHOT")
+  }
+}
+
+apply(plugin = "io.spring.dependency-management")
+----
+
+이런 기초 설정을 하는 것으로, project의 dependency 관리하고 dependency를 선언할 준비가 되었다.
+
+== Dependency Management Configuration
+
+plugin의 dependency 관리를 설정하기 위한 두 가지 선택지가 있다.
+
+1. plugin의 DSL을 사용하여 직접적으로 dependency 관리를 설정한다.
+
+2. 하나 이상의 Maven bom을 import 한다.
+
+=== Dependency Management DSL
+
+DSL은
